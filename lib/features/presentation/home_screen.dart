@@ -19,6 +19,11 @@ class _HomeFState extends State<HomeF> {
     Colors.greenAccent.shade100,
     Colors.pinkAccent.shade100,
     Colors.purpleAccent.shade100,
+    Colors.amberAccent.shade100,
+    Colors.tealAccent.shade100,
+    Colors.lightBlueAccent.shade100,
+    Colors.limeAccent.shade100,
+    Colors.deepOrangeAccent.shade100,
   ];
 
   @override
@@ -121,10 +126,7 @@ class _HomeFState extends State<HomeF> {
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          containerColor.withOpacity(0.8),
-                          containerColor,
-                        ],
+                        colors: [containerColor.withAlpha(60), containerColor],
                       ),
                       boxShadow: const [
                         BoxShadow(
