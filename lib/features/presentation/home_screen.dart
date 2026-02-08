@@ -49,7 +49,7 @@ class _HomeFState extends State<HomeF> {
       appBar: AppBar(
         elevation: 0,
         title: const Center(
-          child: Text("NOTS", style: TextStyle(fontWeight: FontWeight.bold)),
+          child: Text("NOTES", style: TextStyle(fontWeight: FontWeight.bold)),
         ),
       ),
       body: Consumer<TodoProvider>(
