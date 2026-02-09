@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo/features/model/add_todo_model.dart';
 import 'package:todo/features/data/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,6 +38,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
     nameController.dispose();
     descController.dispose();
     super.dispose();
+  }
+
+  // share notes
+  void _shareNote() async {
+    final content = '${widget.item.name}\n\n${widget.item.age}';
+    try {
+      await SharePlus.instance.share(
+        ShareParams(text: content, subject: content),
+      );
+    } catch (e) {
+      debugPrint("Error sharing the note: $e");
+    }
   }
 
   //lunch url
@@ -83,28 +96,39 @@ class _DetailsScreenState extends State<DetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
+                tooltip: 'share',
                 onPressed: () {
                   if (!mounted) return;
                   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.chevron_left, size: 30),
               ),
-              IconButton(
-                icon: const Icon(Icons.save_outlined),
-                onPressed: () async {
-                  FocusScope.of(context).unfocus();
-                  final provider = Provider.of<TodoProvider>(
-                    context,
-                    listen: false,
-                  );
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.save_outlined),
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      final provider = Provider.of<TodoProvider>(
+                        context,
+                        listen: false,
+                      );
 
-                  // Update the current item
-                  widget.item.name = nameController.text;
-                  widget.item.age = descController.text;
+                      // Update the current item
+                      widget.item.name = nameController.text;
+                      widget.item.age = descController.text;
 
-                  // Save/update in provider
-                  await provider.updateTodo(widget.item);
-                },
+                      // Save/update in provider
+                      await provider.updateTodo(widget.item);
+                    },
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      _shareNote();
+                    },
+                    icon: Icon(Icons.ios_share_outlined),
+                  ),
+                ],
               ),
             ],
           ),

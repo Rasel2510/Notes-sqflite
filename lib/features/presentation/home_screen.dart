@@ -12,7 +12,7 @@ class HomeF extends StatefulWidget {
 }
 
 class _HomeFState extends State<HomeF> {
-  // List of background colors to cycle through
+  // List of background colors
   final List<Color> containerColors = [
     Colors.pinkAccent.shade100,
     Colors.cyanAccent.shade100,
