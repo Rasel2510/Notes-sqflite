@@ -39,7 +39,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     super.dispose();
   }
 
-  //open link
+  //lunch url
   Future<void> _openLink(LinkableElement link) async {
     final uri = Uri.parse(link.url);
     if (await canLaunchUrl(uri)) {
@@ -84,6 +84,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             children: [
               IconButton(
                 onPressed: () {
+                  if (!mounted) return;
                   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.chevron_left, size: 30),

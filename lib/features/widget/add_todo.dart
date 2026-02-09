@@ -98,7 +98,7 @@ class _AddTodoState extends State<AddTodo> {
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
                   await _saveTodo();
-
+                  if (!mounted) return;
                   Navigator.of(context).pop();
                 },
               ),
