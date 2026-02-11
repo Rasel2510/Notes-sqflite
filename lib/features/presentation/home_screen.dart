@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/constaines/navigaton_servise.dart';
+import 'package:todo/constaines/routes.dart';
 import 'package:todo/features/data/provider.dart';
 import 'package:todo/features/presentation/details_screen.dart';
 import 'package:todo/features/widget/add_todo.dart';
@@ -148,10 +150,9 @@ class _HomeFState extends State<HomeF> {
                 },
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => DetailsScreen(
+                    NavigationService().push(
+                      CustomRoutes.bottomToTop(
+                        DetailsScreen(
                           item: item,
                           containerColor:
                               containerColors[index % containerColors.length],
@@ -241,10 +242,7 @@ class _HomeFState extends State<HomeF> {
         foregroundColor: Colors.white,
 
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const AddTodo()),
-          );
+          NavigationService().push(CustomRoutes.bottomToTop(const AddTodo()));
         },
         child: const Icon(Icons.add),
       ),

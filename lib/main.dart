@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/constaines/navigaton_servise.dart';
 import 'package:todo/features/data/provider.dart';
 import 'package:todo/features/presentation/home_screen.dart';
 
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => TodoProvider(),
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: HomeF()),
+      child: MaterialApp(
+        navigatorKey: NavigationService().navigatorKey,
+        debugShowCheckedModeBanner: false,
+        home: HomeF(),
+      ),
     );
   }
 }
