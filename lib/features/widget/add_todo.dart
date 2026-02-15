@@ -19,6 +19,8 @@ class _AddTodoState extends State<AddTodo> {
   late TextEditingController descriptionController;
   late Color containerColor;
 
+  bool _isSaved = false; // ⚡ Prevent double-saving
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,9 @@ class _AddTodoState extends State<AddTodo> {
 
   // SAVE TO-DO
   Future<void> _saveTodo() async {
+    if (_isSaved) return;
+    _isSaved = true;
+
     final provider = Provider.of<TodoProvider>(context, listen: false);
 
     // Don't save if both fields are empty
@@ -41,8 +46,9 @@ class _AddTodoState extends State<AddTodo> {
         descriptionController.text.trim().isEmpty) {
       return;
     }
+
     final now = DateTime.now();
-    final formatedTime = DateFormat("MMM d, yyyy hh:mm a").format(now);
+    final formattedTime = DateFormat("MMM d, yyyy hh:mm a").format(now);
 
     // If it's an existing todo, update it
     if (widget.item != null) {
@@ -51,7 +57,7 @@ class _AddTodoState extends State<AddTodo> {
           id: widget.item!.id,
           name: titleController.text,
           age: descriptionController.text,
-          createdAt: formatedTime,
+          createdAt: formattedTime,
         ),
       );
     } else {
@@ -61,18 +67,14 @@ class _AddTodoState extends State<AddTodo> {
           id: DateTime.now().millisecondsSinceEpoch,
           name: titleController.text,
           age: descriptionController.text,
-          createdAt: formatedTime,
+          createdAt: formattedTime,
         ),
       );
     }
-
-    // Pop after saving
-    // Navigator.of(context).pop();
   }
 
   @override
   void dispose() {
-    // No need to call _saveTodo here anymore
     titleController.dispose();
     descriptionController.dispose();
     super.dispose();
@@ -87,7 +89,7 @@ class _AddTodoState extends State<AddTodo> {
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
-        await _saveTodo();
+        await _saveTodo(); // Auto-save on back
       },
       canPop: true,
       child: Scaffold(
@@ -108,7 +110,7 @@ class _AddTodoState extends State<AddTodo> {
                 icon: const Icon(Icons.save_outlined),
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
-                  await _saveTodo();
+                  await _saveTodo(); // Save once
                   Navigator.of(context).pop();
                 },
               ),
@@ -121,7 +123,6 @@ class _AddTodoState extends State<AddTodo> {
             behavior: HitTestBehavior.opaque,
             onTap: () {
               FocusScope.of(context).unfocus();
-              // No need to save here anymore
             },
             child: Container(
               width: double.infinity,
