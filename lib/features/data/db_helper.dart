@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:todo/features/model/add_todo_model.dart';
 
 class DbHelper {
@@ -15,9 +13,11 @@ class DbHelper {
       return _database;
     }
     // find path and create table
-    Directory directory = await getApplicationDocumentsDirectory();
 
-    String path = join(directory.path, 'mydatabase.db');
+    String path = join(await getDatabasesPath(), 'mydatabase.db');
+    // Directory directory = await getApplicationDocumentsDirectory();
+
+    // String path = join(directory.path, 'mydatabase.db');
 
     // open  db file and create table
     _database = await openDatabase(

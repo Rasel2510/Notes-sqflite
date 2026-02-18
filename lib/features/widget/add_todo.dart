@@ -19,7 +19,7 @@ class _AddTodoState extends State<AddTodo> {
   late TextEditingController descriptionController;
   late Color containerColor;
 
-  bool _isSaved = false; // ⚡ Prevent double-saving
+  bool _isSaved = false;
 
   @override
   void initState() {
